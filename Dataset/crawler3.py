@@ -5,13 +5,9 @@ import time
 import pandas as pd
 import urllib.request
 from bs4 import BeautifulSoup
-from requests import request
+from requests import get, request
 from requests.exceptions import HTTPError
-from time import sleep
-from bs4 import BeautifulSoup
-from requests import get
-from requests.compat import urljoin
-from requests.compat import urlparse
+from requests.compat import urljoin, urlparse
 
 ### 기사 제목, 링크, 언론사, 기자 정보 크롤링
 
@@ -30,8 +26,8 @@ from requests.compat import urlparse
 #         print("Error Code:" + rescode)
 
 # 메타데이터, 검색어 지정
-client_id = "YOUR_ID" # 개발자센터에서 발급받은 Client ID 값
-client_secret = "YOUR_PW" # 개발자센터에서 발급받은 Client Secret 값
+client_id = "YOUR_API_ID" # 개발자센터에서 발급받은 Client ID 값
+client_secret = "YOUR_API_PW" # 개발자센터에서 발급받은 Client Secret 값
 user_agent = 'BROWSER_USER_AGENT'
 
 query = input("검색어를 입력하세요 : ")
@@ -111,15 +107,10 @@ def download(url, params={}, data={}, headers={}, method='GET', retries=3):
 
 ### ------gathering newses---
 
-URLs = []
-Visited = []
-Skipped = []
+URLs = df['link']
 
-NEWS_TEXT = './Naver_Politics_News'
+NEWS_TEXT = []
 
-sect = [100] # 정치 섹션 (Naver 기준)
-sectdic = {100:0}
-depth = 5
 
 optin = ['news.naver.com', 'n.news.naver.com']
 optout = ['v.daum.net', '']
