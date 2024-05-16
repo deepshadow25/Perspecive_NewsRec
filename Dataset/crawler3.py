@@ -30,9 +30,9 @@ from requests.compat import urlparse
 #         print("Error Code:" + rescode)
 
 # 메타데이터, 검색어 지정
-client_id = "_YFqG3ZVCr0AwjBaJg3w" # 개발자센터에서 발급받은 Client ID 값
-client_secret = "pJO9HtL9Ao" # 개발자센터에서 발급받은 Client Secret 값
-user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+client_id = "YOUR_ID" # 개발자센터에서 발급받은 Client ID 값
+client_secret = "YOUR_PW" # 개발자센터에서 발급받은 Client Secret 값
+user_agent = 'BROWSER_USER_AGENT'
 
 query = input("검색어를 입력하세요 : ")
 encText = urllib.parse.quote(query)
