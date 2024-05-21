@@ -7,6 +7,6 @@
  
 crawler.py 파일 실행법
 ```Python3
-python crawler.py --start-date 2024-02-05 --end-date 2024-02-13 --filter
+python crawler.py --start_date 2024-02-05 --end_date 2024-02-13 --filter
 ```
 필터 (--filter)는 선택사항. 없어도 실행 가능
