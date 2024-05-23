@@ -10,10 +10,7 @@ python crawl_search.py --filter
 
 # Import Libraries
 from requests import get
-from requests.exceptions import HTTPError
-from requests.compat import urljoin, urlparse
 from bs4 import BeautifulSoup
-from datetime import datetime, timedelta
 from tqdm import tqdm
 from time import sleep
 import argparse
@@ -21,7 +18,6 @@ import urllib.request
 import pandas as pd
 import json
 import re
-import os
 
 # 전처리 함수 정의
 def preprocessing(d):
