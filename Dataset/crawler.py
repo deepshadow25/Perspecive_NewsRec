@@ -23,7 +23,8 @@ def preprocessing(d):
     d = re.sub(r'‘’ⓒ\'\"“”…=□*◆:/_]', ' ', d)
     d = re.sub(r'\s+', ' ', d)
     d = re.sub(r'^\s|\s$', '', d)
-    d = re.sub(r'[<*>a-z_="/()]', '', d)
+    d = re.sub(r'[\<br\>]','',d)
+    d = re.sub(r'[<*>_="/]', '', d)
     return d
 
 # Base URL 설정
@@ -154,8 +155,13 @@ def main(start_date_str, end_date_str, filter_news):
             page += 1
             time.sleep(2)  # 서버에 부담을 주지 않도록 잠시 대기
 
-    # 메타데이터 데이터프레임 생성 
+    # 메타데이터 데이터프레임 생성 & 메타데이터 백업
     df1 = pd.DataFrame(all_articles)
+    df1.drop_duplicates(ignore_index=True)
+    metadata_filename = f'메타데이터_{str(start_date)[:10]}_{str(end_date)[:10]}.csv'
+    if df1.empty == 0:
+        df1.to_csv(f'./{metadata_filename}', index=False, encoding='utf-8-sig')
+    print(f"메타데이터 파일을 저장했습니다: {metadata_filename}")
 
     # 기사 본문, 기자 정보 리스트에 저장하기
     article_data_list = []
@@ -183,7 +189,7 @@ def main(start_date_str, end_date_str, filter_news):
 
     # CSV 파일로 저장
     csv_filename = f'뉴스기사_{str(start_date)[:10]}_{str(end_date)[:10]}.csv'
-    df.to_csv(csv_filename, index=False, encoding='utf-8-sig')
+    df.to_csv(f'./{csv_filename}', index=False, encoding='utf-8-sig')
 
     print(f"CSV 파일로 저장되었습니다: {csv_filename}")
 
@@ -203,7 +209,7 @@ def filter_and_label(df):
                    (df['언론사']=='오마이뉴스') | (df['언론사']=='문화일보')]
 
     # 정치 성향 라벨링
-    df_select['정치성향분류'] = [1 if x in ['한겨레', '경향신문', '프레시안', '오마이뉴스'] else 0 for x in df_select['source']]
+    df_select['정치성향분류'] = [1 if x in ['한겨레', '경향신문', '프레시안', '오마이뉴스'] else 0 for x in df_select['언론사']]
     
     return df_select
 
