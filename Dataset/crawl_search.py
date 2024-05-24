@@ -139,7 +139,7 @@ def filter_and_label(df):
                    (df['언론사']=='오마이뉴스') | (df['언론사']=='문화일보')]
 
     # 정치 성향 라벨링
-    df_select['정치성향분류'] = [1 if x in ['한겨레', '경향신문', '프레시안', '오마이뉴스'] else 0 for x in df_select['source']]
+    df_select['정치성향분류'] = [1 if x in ['한겨레', '경향신문', '프레시안', '오마이뉴스'] else 0 for x in df_select['언론사']]
     
     return df_select    
 
@@ -160,7 +160,7 @@ def main(url, query, filter_news):
     
     # CSV 파일로 저장
     nowtime = strftime(r'%Y%m%d', localtime())
-    csv_filename = f'네이버뉴스_{query}_{str(nowtime)}.csv'
+    csv_filename = f'네이버뉴스_{query}_{str(nowtime)}_filter.csv' if filter_news else  f'네이버뉴스_{query}_{str(nowtime)}.csv'
     
     df.to_csv(f'./{csv_filename}', index=False, encoding='utf-8-sig') # CSV 파일 저장경로 지정
     print(f"CSV 파일로 저장되었습니다: {csv_filename}")
