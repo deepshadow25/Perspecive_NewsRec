@@ -40,8 +40,8 @@ user_agent = 'YOUR_WEB_USER_AGENT'
 
 query = input("검색어를 입력하세요 : ")
 encText = urllib.parse.quote(query)
-# 최대 페이지 (수집할 기사의 양) 지정
-page = list(range(1, 5000))
+# 페이지 (수집할 기사의 양) 수 지정. 최대 1000페이지 (1~1000) 지원
+page = list(range(1, 1001))
 
 
 # 기사 수집 함수 정의
