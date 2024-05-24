@@ -161,7 +161,8 @@ def main(url, query, filter_news):
     # CSV 파일로 저장
     nowtime = strftime(r'%Y%m%d', localtime())
     csv_filename = f'네이버뉴스_{query}_{str(nowtime)}.csv'
-    df.to_csv(f'./Naver_Politics_News/{csv_filename}', index=False, encoding='utf-8-sig')
+    
+    df.to_csv(f'./{csv_filename}', index=False, encoding='utf-8-sig') # CSV 파일 저장경로 지정
     print(f"CSV 파일로 저장되었습니다: {csv_filename}")
 
     
