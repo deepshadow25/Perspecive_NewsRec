@@ -34,11 +34,11 @@ def fetch_Naver_article(article_url):
     reporter = reporter_tag.get_text(strip=True) if reporter_tag else ''
 
     article_data = {
-        'title': title,
-        'link': article_url,
-        'content': content,
-        'source': source,
-        'reporter': reporter
+        '제목': title,
+        '기사링크': article_url,
+        '기사전문': content,
+        '언론사': source,
+        '기': reporter
     }
 
     return article_data
