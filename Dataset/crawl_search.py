@@ -10,7 +10,7 @@ python crawl_search.py --filter
 
 # Import Libraries
 from requests import get
-from crawLib import fetch_Naver_article, preprocessing, filter_and_label
+from crawLib import fetch_Naver_article, preprocessing, filter_and_label # crawLib.py 참고
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from time import sleep, localtime, strftime
