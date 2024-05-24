@@ -153,7 +153,7 @@ def main(url, query, filter_news):
 
     df2 = pd.DataFrame(article_data_list)
     df = pd.merge(df1, df2)
-    df = df[['언론사', '기자', '제목', '기사요약','기사전문', '기사링크', '원본링크']]
+    df = df[['언론사', '기자', '발행일자', '제목', '기사요약','기사전문', '기사링크', '원본링크']]
     
     if filter_news:
         df = filter_and_label(df)
