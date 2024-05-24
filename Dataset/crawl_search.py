@@ -12,7 +12,7 @@ python crawl_search.py --filter
 from requests import get
 from bs4 import BeautifulSoup
 from tqdm import tqdm
-from time import sleep
+from time import sleep, localtime, strftime
 import argparse
 import urllib.request
 import pandas as pd
@@ -159,7 +159,8 @@ def main(url, query, filter_news):
         df = filter_and_label(df)
     
     # CSV 파일로 저장
-    csv_filename = f'네이버뉴스_{query}.csv'
+    nowtime = strftime(r'%Y%m%d', localtime())
+    csv_filename = f'네이버뉴스_{query}_{str(nowtime)}.csv'
     df.to_csv(f'./Naver_Politics_News/{csv_filename}', index=False, encoding='utf-8-sig')
     print(f"CSV 파일로 저장되었습니다: {csv_filename}")
 
