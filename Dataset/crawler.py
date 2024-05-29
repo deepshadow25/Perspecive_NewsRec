@@ -17,17 +17,6 @@ import argparse
 import re
 import time
 
-# 전처리 함수 정의
-def preprocessing(d):
-    d = d.lower()
-    d = re.sub(r'[a-z0-9\-_.]{3,}@[a-z0-9\-_.]{3,}(?:[.]?[a-z]{2})+', ' ', d)
-    d = re.sub(r'‘’ⓒ\'\"“”…=□*◆:/_]', ' ', d)
-    d = re.sub(r'\s+', ' ', d)
-    d = re.sub(r'^\s|\s$', '', d)
-    d = re.sub(r'[\<br\>]','',d)
-    d = re.sub(r'[<*>_="/]', '', d)
-    return d
-
 # Base URL 설정
 
 base_url = 'https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1=100&date={date}&page={page}'
