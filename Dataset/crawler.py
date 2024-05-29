@@ -8,6 +8,7 @@ python crawler.py --start_date 2024-04-20 --end_date 2024-04-24 --filter 로 fil
 # Import Library
 from requests import get
 from requests.compat import urljoin
+from crawLib import *
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from tqdm import tqdm
@@ -28,20 +29,6 @@ def preprocessing(d):
     return d
 
 # Base URL 설정
-"""
-페이지수를 볼 수 있는 네이버 뉴스 주소 
-(일반 뉴스는 .../main/main.naver?... 주소로 이루어짐)
-'https://news.naver.com/main/list.naver?
-mode=LSD&
-mid=shm&
-sid1=100&   -- 카테고리
-date={date}& -- 상세카테고리
-page={page}' -- 페이지
-
-sid1 (카테고리) : 100(정치), 101(경제), 102(사회), 103(생활문화), 104(세계), 105(IT과학), 106(연예), 107(스포츠), 110(오피니언)
-
-sid2 (상세카테고리) : 
-"""
 
 base_url = 'https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1=100&date={date}&page={page}'
 
@@ -195,23 +182,7 @@ def main(start_date_str, end_date_str, filter_news):
 
 
 
-## 특정 언론사만 남기기
 
-# 특정 언론사 필터링 및 정치성향 라벨링 함수
-def filter_and_label(df):
-    """
-    진보, 보수 성향 언론 4개씩 선정.
-    진보 언론 : 한겨레, 경향신문, 프레시안, 오마이뉴스
-    보수 언론 : 조선일보, 중앙일보, 동아일보, 문화일보
-    """
-    df_select = df[(df['언론사']=='조선일보') | (df['언론사']=='중앙일보') | (df['언론사']=='동아일보') | 
-                   (df['언론사']=='한겨레') | (df['언론사']=='경향신문') | (df['언론사']=='프레시안') | 
-                   (df['언론사']=='오마이뉴스') | (df['언론사']=='문화일보')]
-
-    # 정치 성향 라벨링
-    df_select['정치성향분류'] = [1 if x in ['한겨레', '경향신문', '프레시안', '오마이뉴스'] else 0 for x in df_select['언론사']]
-    
-    return df_select
 
 # parser 작동 구문
 
