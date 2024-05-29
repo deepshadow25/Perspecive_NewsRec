@@ -17,15 +17,15 @@ python crawler.py --start_date 2024-02-05 --end_date 2024-02-13 --filter
 페이지수를 볼 수 있는 네이버 뉴스 주소 (일반 뉴스는 .../main/main.naver?... 주소로 이루어짐)
 
 ```Python3
-base_url = 'https://news.naver.com/main/list.naver?'
+base_url = 'https://news.naver.com/main/list.naver'
 params = {
     mode:LSD,        # 읽기 모드
     mid:shm,         # 미디어 종류
     sid1:100,        # 카테고리
-    sid2:264,        # 상세카테고리
-    listType:title   # 읽기타입 (title : 제목형, summary : 요약형, paper : 신문게재기사만, photo : 포토만)
-    date:20240205,   # 날짜
-    page:4           # 페이지
+    # sid2:264,      # 상세카테고리
+    # listType:title # 읽기타입 (title : 제목형, summary : 요약형, paper : 신문게재기사만, photo : 포토만)
+    date:{date},     # 날짜 (ex 20240205)
+    page:{page}      # 페이지 (ex 4)
 }
 ```
 
