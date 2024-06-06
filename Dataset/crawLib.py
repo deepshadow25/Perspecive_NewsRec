@@ -11,37 +11,86 @@ def preprocessing(d):
     d = re.sub(r'[<*>_="/■□▷▶]', '', d)
     return d
 
-# 기사 본문, 기자 정보 수집 함수
-# 네이버뉴스 기준
-def fetch_Naver_article(article_url):
-    resp = get(article_url)
-    article_dom = BeautifulSoup(resp.text, 'html.parser')
+# 예외 단어 처리 - 재사용하기 위해 컴파일로 미리 저장.
+exclude_keywords = re.compile(r'(속보|포토|헤드라인|지지율|여론조사|기념촬영|운세|날씨)')
+
+# 기사 가져오는 함수
+def fetch_articles(url):
+    resp = get(url, headers=headers)
+    dom = BeautifulSoup(resp.text, 'html.parser')
+    articles = dom.select('.content ul.type06_headline li')
+    article_data_list = []
+
+    # DOM select로 얻어낸 html 반복문 실행하여 데이터 추출
+    for article in articles:
+        title_tag = article.find('dt', class_=None)
+        title_text = title_tag.get_text(strip=True)
+       
+        # 제목내 예외단어 발견 or 한글이 없을 시 추출 건너뛰기 (넘어가기)
+        if exclude_keywords.search(title_text) or len(re.sub('[a-zA-Z\s,.0-9\'()’?…s-$[]\{\}\\]+', '', preprocessing(title_text)))==0:
+            continue
     
-    # 기사 제목 추출
-    title_tag = article_dom.select_one('h2#title_area')
-    title = title_tag.get_text(strip=True) if title_tag else ''
+        # 기사 링크 태그, 주소, 요약 태그, 기자 태그
+        link_tag = title_tag.find('a')
+        article_url = link_tag['href']
+        source_tag = article.find('span', class_='writing')
+        
+
+        # 기사별 메타데이터 딕셔너리 생성
+        article_dict = {
+            'title': title_text, # 뉴스제목
+            'link': article_url, # 뉴스링크
+            'media': source_tag.get_text(strip=True) if source_tag else '' # 언론사
+        }
+        
+        # 여러 기사에 대해 메타데이터 작성
+        article_data_list.append(article_dict)
+
+    return article_data_list, dom
+
+# 다음 페이지 넘어가기 : 최대 100페이지 전까지 정의
+def get_next_page(dom, current_page):
+    if current_page < 101:
+        next_page_tag = dom.select_one(f'.paging a[href*="page={current_page + 1}"]')
+        if next_page_tag:
+            return urljoin(base_url, next_page_tag['href'])
+    return None
+
+# 일자별 크롤링 함수
+def generate_dates(date):
+    current_date = date
+    while current_date <= date:
+        yield current_date
+        current_date += timedelta(days=1)
+
+        
+# 기사 본문, 기자 정보 수집 함수
+def fetch_article_data(article_url):
+    resp = get(article_url, headers=headers)
+    article_dom = BeautifulSoup(resp.text, 'html.parser')
+
 
     # 기사 본문 추출
     content_tag = article_dom.select_one('article')
     content = preprocessing(content_tag.get_text(strip=True)) if content_tag else ''
-
-    # 언론사 정보 추출
-    source_tag = article_dom.select_one('meta[property="og:article:author"]')
-    source = source_tag['content'] if source_tag else ''
     
+    # # 문장 수 제한 (10문장 이상)
+    if len(content.split('.')) < 10:
+        content = ''
+ 
     # 기자 정보 추출
     reporter_tag = article_dom.select_one('div.byline span')
     reporter = reporter_tag.get_text(strip=True) if reporter_tag else ''
 
     article_data = {
-        '제목': title,
-        '기사링크': article_url,
-        '기사전문': content,
-        '언론사': source,
-        '기': reporter
+        'link': article_url, # 기사링크
+        'article': content,  # 기사본문
+        'reporter': reporter # 기자
     }
 
     return article_data
+
+
 
 # 특정 언론사 필터링 및 정치성향 라벨링 함수
 def filter_and_label(df):
