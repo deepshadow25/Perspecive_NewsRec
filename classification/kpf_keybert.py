@@ -109,7 +109,7 @@ def mmr(doc_embedding, candidate_embeddings, words, top_n, diversity):
 
 def main(filename):
     filepath = f'./data/{filename}.csv' # ex) ./data/news_2024-04-20.csv
-    df = pd.read_csv(filename, encoding='utf8')
+    df = pd.read_csv(filepath, encoding='utf8')
     kwdList = []
     for kw in tqdm(df['summary']):
         try:
@@ -118,7 +118,7 @@ def main(filename):
             kwdList.append('키워드_요약실패')
 
     df['summary'] = kwdList
-    df.to_csv(filename, encoding='utf8', index=False)
+    df.to_csv(f'./data/{filename}+summary.csv', encoding='utf8', index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='뉴스 기사 키워드 생성기")
