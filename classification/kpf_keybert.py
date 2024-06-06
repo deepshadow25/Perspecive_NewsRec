@@ -40,7 +40,7 @@ from bareunpy import Tagger
 import pandas as pd
 from tqdm import tqdm
 import re
-import argpaser
+import argparse
 
 
 API_KEY = "YOUR API KEY" # 수정 필요 (Bareun 형태소 분석기 API)
@@ -123,7 +123,8 @@ def main(filename):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='뉴스 기사 키워드 생성기')
     parser.add_argument('--filename', type=str, required=True, help='뉴스 본문, 요약문 수집된 파일 이름 입력')
-
+    args = parser.parse_args()
+    
     main(args.filename)
     
 
