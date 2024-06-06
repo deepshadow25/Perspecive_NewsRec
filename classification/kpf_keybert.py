@@ -121,7 +121,7 @@ def main(filename):
     df.to_csv(f'./data/{filename}+summary.csv', encoding='utf8', index=False)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='뉴스 기사 키워드 생성기")
+    parser = argparse.ArgumentParser(description='뉴스 기사 키워드 생성기')
     parser.add_argument('--filename', type=str, required=True, help='뉴스 본문, 요약문 수집된 파일 이름 입력')
 
     main(args.filename)
