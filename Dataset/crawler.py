@@ -1,8 +1,6 @@
 ## 사용방법
 """
-python crawler.py --start_date 2024-04-20 --end_date 2024-04-24
-또는
-python crawler.py --start_date 2024-04-20 --end_date 2024-04-24 --filter 로 filter 옵션 추가 가능
+python crawler.py --date 2024-04-20
 """
 
 # Import Library
@@ -19,6 +17,10 @@ import argparse
 import re
 import json
 import time
+
+import mysql.connector
+from mysql.connector import Error
+from datetime import datetime
 
 # 전처리 함수 정의
 def preprocessing(d):
@@ -199,7 +201,53 @@ def refine_article(df):
     df['article'] = new_articles
     
     return df
-    
+
+def collect_news():
+    # 여기서 뉴스 데이터를 수집하는 로직을 작성합니다.
+    # 예를 들어, 뉴스 데이터는 다음과 같은 형식으로 수집될 수 있습니다.
+    news_data = [
+        {
+            'title': 'Sample News Title 1',
+            'content': 'This is a sample news content 1.',
+            'media': 'Sample Media 1',
+            'reporter': 'Reporter 1',
+            'link': 'https://sample.news/link1',
+            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        },
+        {
+            'title': 'Sample News Title 2',
+            'content': 'This is a sample news content 2.',
+            'media': 'Sample Media 2',
+            'reporter': 'Reporter 2',
+            'link': 'https://sample.news/link2',
+            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+    ]
+
+    for news in news_data:
+        save_to_db(news)
+
+def save_to_db(news_data):
+    try:
+        connection = mysql.connector.connect(
+            host='localhost',
+            database='news_db',
+            user='news_user',
+            password='your_password'
+        )
+        cursor = connection.cursor()
+        insert_query = """
+        INSERT INTO news (title, content, media, reporter, link, date) 
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(insert_query, (news_data['title'], news_data['content'], news_data['media'], news_data['reporter'], news_data['link'], news_data['date']))
+        connection.commit()
+        cursor.close()
+        connection.close()
+        print(f"News '{news_data['title']}' added successfully!")
+    except Error as e:
+        print(f"Error: {e}")
+
 
 ## 기사 메타데이터 합치기
 def main(date_str):
