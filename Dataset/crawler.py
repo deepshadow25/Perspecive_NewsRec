@@ -71,6 +71,7 @@ def fetch_articles(url):
         article_dict = {
             'title': title_text, # 뉴스제목
             'link': article_url, # 뉴스링크
+            'media': source_tag.get_text(strip=True) if source_tag else '' # 언론사 (전처리용)
         }
         
         # 여러 기사에 대해 메타데이터 작성
@@ -241,15 +242,15 @@ def main(date_str):
         # 데이터프레임 합치기
         df = pd.merge(df1, df2)
 
-        # 데이터프레임 열 순서 바꾸기
-        df = df[['title', 'link', 'article']]
-
         # 중복, 빈 본문 기사 제거
         df.drop_duplicates(subset=None, keep='first', inplace=True, ignore_index=True)
         
         # 기사 본문 추가전처리, 빈 본문 행 제거
         df = refine_article(df)
         df.dropna(subset=['article'], inplace=True)
+
+        # 언론사 열 제거
+        df = df.loc[:, ['title', 'link', 'article']]
         
         # 열 이름 변경
         df.columns = ['title', 'link', 'article']
