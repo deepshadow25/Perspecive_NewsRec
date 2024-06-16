@@ -106,10 +106,12 @@ def clustering(target_article, similar_news):
             'topic')['index'].value_counts().rename('count').reset_index()
         most_common_index_per_topic = index_counts.loc[index_counts.groupby('topic')[
             'count'].idxmax()]
+        most_common_index_per_topic=most_common_index_per_topic.drop_duplicates(subset='index') # 중복 제거
 
         return most_common_index_per_topic['index'].iloc[:3].tolist()
 
     else:
+        db_paragraph_data=db_paragraph_data.drop_duplicates(subset='index') #중복 제거
         return db_paragraph_data['index'].iloc[:3].tolist()
 
         # 토픽이 3개 이하라면
