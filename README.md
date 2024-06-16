@@ -91,4 +91,4 @@
 
 유사도 분석 : [KPFSBERT](https://github.com/KPFBERT/kpfSBERT)
 
-관점 나누기 : [BERTTopic](https://maartengr.github.io/BERTopic/index.html) 모델을 한국어 데이터로 학습한 모델 사
+관점 나누기 : [BERTTopic](https://maartengr.github.io/BERTopic/index.html) 모델을 한국어 데이터로 학습한 모델 활용 
