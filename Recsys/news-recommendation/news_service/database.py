@@ -11,6 +11,7 @@ with open("db.json", "r") as f:  # DB에서 데이터 가져오기
 def get_embedding_dataset(query):  # 임베딩 데이터 불러오기
     conn = pymysql.connect(
         host=db['host'],
+        port=db['port'],
         user=db['user'],
         password=db['password'],
         db=db['db'],
@@ -42,6 +43,7 @@ def get_embedding_dataset(query):  # 임베딩 데이터 불러오기
 def get_news_dataset(query):  # 뉴스기사 데이터 불러오기
     conn = pymysql.connect(
         host=db['host'],
+        port=db['port'],
         user=db['user'],
         password=db['password'],
         db=db['db'],
