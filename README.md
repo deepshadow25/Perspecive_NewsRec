@@ -57,6 +57,14 @@
 ![image](https://github.com/deepshadow25/Perspecive_NewsRec/assets/115054681/7d61dc8c-aec6-43bd-9326-52866501da37)
 
 
+## 사용법 설명
+
+Google Chrome Extension 기반 작동
+1. 확장 프로그램을 설치한다.
+2. 설치한 프로그램을 작동시키고 뉴스 웹페이지에 접속한다
+3. 프로그램이 
+
+
 # 데이터 설명
 
 - 네이버 뉴스 크롤링 수집 코드
@@ -106,3 +114,5 @@
 유사도 분석 : [KPFSBERT](https://github.com/KPFBERT/kpfSBERT)
 
 관점 나누기 : [BERTTopic](https://maartengr.github.io/BERTopic/index.html) 모델을 한국어 데이터로 학습한 모델 활용 
+
+
