@@ -54,7 +54,7 @@
 
 ## Flow Chart
 
-![image](https://github.com/deepshadow25/Perspecive_NewsRec/assets/115054681/7d61dc8c-aec6-43bd-9326-52866501da37)
+![image](https://github.com/deepshadow25/Perspecive_NewsRec/assets/115054681/cdbd1b90-e80d-4e3c-b209-893faa7007a5)
 
 
 ## 사용법 설명
