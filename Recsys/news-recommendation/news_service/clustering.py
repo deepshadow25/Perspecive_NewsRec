@@ -43,7 +43,7 @@ def clustering(target_article, similar_news):
 
     # BERTopic을 이용한 클러스터링
     model = BERTopic(embedding_model='bongsoo/kpf-sbert-128d-v1',
-                     min_topic_size=7)
+                     min_topic_size=5)
 
     topics, probs = model.fit_transform(
         documents=train_paragraph_data['paragraph'], embeddings=train_paragraph_embeddings)  # 클러스터링 만들기
