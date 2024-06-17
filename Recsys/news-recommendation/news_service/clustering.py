@@ -54,7 +54,7 @@ def clustering(target_article, similar_news):
 
     # BERTopic을 이용한 클러스터링
     model = BERTopic(embedding_model='bongsoo/kpf-sbert-128d-v1',
-                     min_topic_size=5)
+                     min_topic_size=7)
 
     topics, probs = model.fit_transform(
         documents=train_paragraph_data['paragraph'], embeddings=train_paragraph_embeddings)  # 클러스터링 만들기
@@ -68,7 +68,7 @@ def clustering(target_article, similar_news):
 
     if len(target_paragraph_data) == 0:  # 만약 현재 읽고 있는 기사의 토픽이 없으면
         print('토픽이 없네요 ㅠㅠ')
-        return similar_news[:3]  # 아무 기사3개 랜덤으로
+        return similar_news  # 아무 기사3개 랜덤으로
 
     # 유사한 기사들의 토픽 모델링 결과 저장
     db_paragraph_data = pd.merge(db_paragraph_data, train_paragraph_data[[
@@ -108,11 +108,11 @@ def clustering(target_article, similar_news):
             'count'].idxmax()]
         most_common_index_per_topic=most_common_index_per_topic.drop_duplicates(subset='index') # 중복 제거
 
-        return most_common_index_per_topic['index'].iloc[:3].tolist()
+        return most_common_index_per_topic['index'].tolist()
 
     else:
         db_paragraph_data=db_paragraph_data.drop_duplicates(subset='index') #중복 제거
-        return db_paragraph_data['index'].iloc[:3].tolist()
+        return db_paragraph_data['index'].tolist()
 
         # 토픽이 3개 이하라면
         # 아무 뉴스 3개 추천

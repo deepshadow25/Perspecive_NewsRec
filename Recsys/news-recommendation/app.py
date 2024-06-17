@@ -31,8 +31,12 @@ def news_service():
 
     various_news = get_news_dataset(
         '''SELECT link FROM news''')
-    various_news = various_news.loc[various_news_index]  # 클러스터링 결과
+    
+    if url in various_news['link']:
+        same_news_index=various_news[various_news['link']==url].index
+        various_news_index.remove(same_news_index)
 
+    various_news = various_news.loc[various_news_index][:3]  # 클러스터링 결과
     # JSON 형식으로 반환 (추천 기사 + 현재 기사 요약문)
     return {
         "news": {"link1": list(various_news[['link']].iloc[0].values),
