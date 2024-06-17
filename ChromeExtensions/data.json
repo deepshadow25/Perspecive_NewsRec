@@ -1,0 +1,18 @@
+{
+    "news": {
+        "link1": [
+            "https://n.news.naver.com/mnews/article/081/0003454354?sid=102"
+        ],
+        "link2": [
+            "https://n.news.naver.com/mnews/article/029/0002868915?sid=101"
+        ],
+        "link3": [
+            "https://n.news.naver.com/mnews/article/022/0003932721?sid=100"
+        ]
+    },
+    "summary": {
+        "sentence1": "정부여당을 향해 “차등 지원도 수용하겠다”며 이른 시일 내 협의하자고 제안한 것이다.",
+        "sentence2": "더불어민주당 이재명 대표가 민생회복지원금과 관련해 고수해오던 ‘보편 지원’ 주장을 내려놨다.",
+        "sentence3": "하지만 여당은 ‘차등 지원’을 전제로 하더라도 여전히 민생회복지원금 자체에 부정적인 모습이다."
+    }
+}
