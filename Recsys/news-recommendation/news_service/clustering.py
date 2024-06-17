@@ -19,17 +19,6 @@ def clustering(target_article, similar_news):
     db_paragraph_data = db_paragraph_data[db_paragraph_data['index'].isin(
         similar_news)]  # 유사한 기사 데이터만 가져오기
 
-    # 단락 별로 문장 자르기 (3줄)#
-    # paragraphs=similar_news['article'].apply(split_into_paragraphs)
-
-    # paragraph_data=[]
-    # for i, data in enumerate(paragraphs.values):
-    #    for j in range(len(data)):
-    #        paragraph_data.append([paragraphs.index[i]]+[data[j]])
-
-    # paragraph_data=pd.DataFrame(
-    #    data=paragraph_data,
-    #    columns=['index','paragraph'])
 
     # 현재 읽고 있는 기사의 단락 데이터
     target_paragraphs = split_into_paragraphs(target_article)
@@ -67,7 +56,7 @@ def clustering(target_article, similar_news):
     target_paragraph_data = target_paragraph_data[target_paragraph_data['topic'] > 0]
 
     if len(target_paragraph_data) == 0:  # 만약 현재 읽고 있는 기사의 토픽이 없으면
-        print('토픽이 없네요 ㅠㅠ')
+        print('No Topic')
         return similar_news  # 아무 기사3개 랜덤으로
 
     # 유사한 기사들의 토픽 모델링 결과 저장
@@ -110,23 +99,7 @@ def clustering(target_article, similar_news):
 
         return most_common_index_per_topic['index'].tolist()
 
-    else:
+    else: # 토픽이 3개 이하이면 나온 것 모두 반환
         db_paragraph_data=db_paragraph_data.drop_duplicates(subset='index') #중복 제거
         return db_paragraph_data['index'].tolist()
 
-        # 토픽이 3개 이하라면
-        # 아무 뉴스 3개 추천
-
-        # article_index = db_paragraph_data.drop_duplicates(subset='index')
-        # db_paragraph_data = db_paragraph_data[db_paragraph_data['topic']
-        #                                      != target_topic]
-
-        # 클러스터링 된 토픽이 3개 이상이면
-        # if num_topics - 2 > 3:
-        #    article_index = db_paragraph_data[db_paragraph_data['topic'].isin(
-        #        indices)]['index'].unique()
-
-        # else:
-        #    article_index = db_paragraph_data['index'].unique()  # 모든 기사 넘겨주기
-
-        # return similar_news[similar_news.index.isin(article_index)]

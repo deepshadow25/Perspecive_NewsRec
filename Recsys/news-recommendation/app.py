@@ -5,7 +5,6 @@ from news_service.clustering import clustering
 from news_service.database import get_news_dataset
 from news_service.article_crawling import fetch_article_data
 from news_service.summary import summarize_article
-import ast
 
 app = Flask(__name__)
 
@@ -47,16 +46,8 @@ def news_service():
             "sentence2": target_summary1[1],
             "sentence3": target_summary1[2]}
     }
-    # "news1": {"link": list(various_news[['link']].iloc[0].values), "summary1": summary[0][0],
-    #          "summary2": summary[0][1], "summary3": summary[0][2]},
-    # "news2": {"link": list(various_news[['link']].iloc[1].values), "summary1": summary[1][0],
-    #          "summary2": summary[1][1], "summary3": summary[1][2]},
-    # "news3": {"link": list(various_news[['link']].iloc[2].values)}
 
 
-# @app.route('/')
-# def hello():
-#    return 'Hello, World!'
 if __name__ == '__main__':
 
     # 모델 로드

@@ -15,16 +15,9 @@ def pearson_similarity(a, b):
 
 def find_similar_news(target_title, model):
 
-    # query = 'SELECT article FROM news2'
-    # db_news = get_news_dataset(query)
     # db에 저장된 임베딩 데이터 불러오기
     query = 'SELECT summary_embedding FROM db_summary_embeddings'
     db_summary_embeddings = get_embedding_dataset(query)
-
-    # 유사도 계산
-    # index = faiss.IndexFlatIP(128)
-    # faiss.normalize_L2(db_summary_embeddings)
-    # index.add(db_summary_embeddings)
 
     # 현재 읽고 있는 기사 요약문 임베딩
     target_summary_embedding = model.encode(target_title,
@@ -53,11 +46,3 @@ def find_similar_news(target_title, model):
     else:
         return [item[1] for item in sorted_similar_list]
 
-    # 유사도 상위 100개 뉴스의 유사도와 인덱스 구하기
-    # similarity, indices = index.search(    np.expand_dims(target_summary_embedding, axis=0), top_k)
-
-    # 상위 100개 뉴스 가져오기
-    # db_news = db_news.iloc[indices[0]]
-    # db_news['similarity'] = similarity[0]
-
-    return indices  # Threshold를 만족하는 뉴스 데이터 반환
