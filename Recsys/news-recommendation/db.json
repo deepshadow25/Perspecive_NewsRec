@@ -1,8 +1,0 @@
-{
-  "host": "34.47.106.154",
-  "port": 3306,
-  "user": "test",
-  "password": "1234",
-  "db": "db",
-  "charset": "utf8"
-}
